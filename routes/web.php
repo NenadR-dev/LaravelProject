@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,35 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'App\Http\Controllers\HomeController@index');
 
-Route::get('/user/{id}', function($id) {
-    return 'User '.$id;
-})->name('user');
+Route::get('/user/{id}', 'App\Http\Controllers\HomeController@show')->name('user');
 
-Route::post('/testPost',function() {
-    return "Top secret stuff! ! !";
-})->middleware('age.check');   
+Route::post('/AgeChecker', [HomeController::class, 'ageChecker'])->middleware('age.check');   
 
-Route::put('/testPut', function() {
-    return 'Put method';
-})->name('testPut');
+Route::put('/testPut','App\Http\Controllers\HomeController@testPut')->name('testPut');
 
-Route::delete('/testDelete', function() {
-    return 'Delete method';
-})->name('testDelete');
+Route::delete('/testDelete', 'App\Http\Controllers\HomeController@testDelete')->name('testDelete');
 
-Route::patch('/testPatch', function() {
-    return 'Patch method';
-})->name('testPatch');
+Route::patch('/testPatch', 'App\Http\Controllers\HomeController@testPatch')->name('testPatch');
 
-Route::get('/error', function() {
-    return 'Age restricted. No age param / age is < 18';
-});
+Route::get('/error', 'App\Http\Controllers\HomeController@showError');
 
-Route::get('/firstnameTest', function() {
-    $name = 'Nenad';
-    return view('firstname',['name' => $name]);
-})->name('firstnameTest');
+Route::get('/firstnameTest', 'App\Http\Controllers\HomeController@bladeFirstname')->name('firstnameTest');
