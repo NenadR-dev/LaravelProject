@@ -40,3 +40,8 @@ Route::patch('/testPatch', function() {
 Route::get('/error', function() {
     return 'Age restricted. No age param / age is < 18';
 });
+
+Route::get('/firstnameTest', function() {
+    $name = 'Nenad';
+    return view('firstname',['name' => $name]);
+})->name('firstnameTest');
