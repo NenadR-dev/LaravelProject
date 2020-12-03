@@ -21,9 +21,9 @@ Route::get('/user/{id}', function($id) {
     return 'User '.$id;
 })->name('user');
 
-Route::post('/testPost', function() {
-    return 'post Test';
-})->name('testPost');
+Route::post('/testPost',function() {
+    return "Top secret stuff! ! !";
+})->middleware('age.check');   
 
 Route::put('/testPut', function() {
     return 'Put method';
@@ -36,3 +36,7 @@ Route::delete('/testDelete', function() {
 Route::patch('/testPatch', function() {
     return 'Patch method';
 })->name('testPatch');
+
+Route::get('/error', function() {
+    return 'Age restricted. No age param / age is < 18';
+});
