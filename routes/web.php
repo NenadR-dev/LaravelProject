@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +17,10 @@ use App\Http\Controllers\ResourceController;
 
 Route::resources([
     'user' => ResourceController::class
+]);
+
+Route::resources([
+    'posts' => PostController::class
 ]);
 
 Route::get('/secret', 'App\Http\Controllers\HomeController@ageChecker')->middleware('age.check');
