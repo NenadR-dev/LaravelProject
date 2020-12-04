@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 
 class ResourceController extends Controller
 {
-    /**
+       /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -23,7 +23,8 @@ class ResourceController extends Controller
      */
     public function create()
     {
-        //
+        $name = "Nenad";
+        return view('firstname',['name' => $name]);
     }
 
     /**
@@ -34,7 +35,7 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "New user post";
     }
 
     /**
@@ -45,7 +46,7 @@ class ResourceController extends Controller
      */
     public function show($id)
     {
-        //
+        return "USER: ".$id;
     }
 
     /**
@@ -68,7 +69,7 @@ class ResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return "PUT / PATCH user hit";
     }
 
     /**
@@ -79,6 +80,6 @@ class ResourceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return 'delete user hit';  
     }
 }

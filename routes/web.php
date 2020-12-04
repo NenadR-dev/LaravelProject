@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ResourceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,18 +14,9 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\HomeController@index');
+Route::resources([
+    'user' => ResourceController::class
+]);
 
-Route::get('/user/{id}', 'App\Http\Controllers\HomeController@show')->name('user');
-
-Route::post('/AgeChecker', [HomeController::class, 'ageChecker'])->middleware('age.check');   
-
-Route::put('/testPut','App\Http\Controllers\HomeController@testPut')->name('testPut');
-
-Route::delete('/testDelete', 'App\Http\Controllers\HomeController@testDelete')->name('testDelete');
-
-Route::patch('/testPatch', 'App\Http\Controllers\HomeController@testPatch')->name('testPatch');
-
+Route::get('/secret', 'App\Http\Controllers\HomeController@ageChecker')->middleware('age.check');
 Route::get('/error', 'App\Http\Controllers\HomeController@showError');
-
-Route::get('/firstnameTest', 'App\Http\Controllers\HomeController@bladeFirstname')->name('firstnameTest');

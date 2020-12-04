@@ -12,11 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'AgeChecker',
-        'testPatch',
-        'testPut',
-        'testPatch',
-        'testDelete',
-        'firstnameTest'
+        'secret',
+        'user'
     ];
 }
