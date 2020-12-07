@@ -53,7 +53,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        return $user->id == $post->user_id ? true : false;
+        return $this->Validate($user->id,$post->user_id);
     }
 
     /**
@@ -65,8 +65,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        
-        return $user->id == $post->user_id ? true : false;
+        return $this->Validate($user->id, $post->user_id);
     }
 
     /**
@@ -91,5 +90,10 @@ class PostPolicy
     public function forceDelete(User $user, Post $post)
     {
         //
+    }
+
+    private function Validate($userID, $postID)
+    {
+        return $userID == $postID ? true : false;
     }
 }

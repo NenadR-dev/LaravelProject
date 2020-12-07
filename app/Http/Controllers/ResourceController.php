@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StoreUserRequest;
 
 class ResourceController extends Controller
 {
@@ -15,7 +16,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        return User::all();
     }
 
     /**
@@ -35,14 +36,15 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $user = User::class();
-        $user->password = Hash::make($request['password']);
-        $user->email = $request['email'];
-        $user->username = $request['username'];
-        User::create($user);
-        return $request->all();
+        $validated = $request->validated();
+        $user = User::create([
+            'name' => $validated['name'],
+            'password' => Hash::make($validated['password']),
+            'email' => $validated['email']
+        ]);
+        return $user;
     }
 
     /**
@@ -51,9 +53,9 @@ class ResourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        return User::findOrFail($id);
+        return $user;
     }
 
     /**
@@ -85,10 +87,9 @@ class ResourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $targetUser = User::findOrFail($id);
-        $targetUser->delete();
-        return $targetUser->id;
+        $user->delete();
+        return $user->id;
     }
 }
