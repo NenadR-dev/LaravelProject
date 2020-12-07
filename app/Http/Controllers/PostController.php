@@ -35,8 +35,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        info('Add post log');
-        //Post::create($request->all());
+        Post::create($request->all());
         return $request->all();
     }
 
@@ -82,9 +81,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        info('Test destroy');
         $targetPost = Post::find($id);
         $targetPost->delete();
-        return "Deleted";
+        return $targetPost->id;
     }
 }

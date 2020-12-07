@@ -174,7 +174,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        'Webpatser\Countries\CountriesServiceProvider'
     ],
 
     /*
@@ -190,6 +190,7 @@ return [
 
     'aliases' => [
 
+        'Countries' => 'Webpatser\Countries\CountriesFacade',
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

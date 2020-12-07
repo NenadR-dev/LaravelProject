@@ -15,12 +15,11 @@ class CreatePostTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('content');
             $table->string('title');
-            $table->unsignedBigInteger('user_id');
             $table->timestamps();
-        });
-        Schema::table('posts', function (Blueprint $table) {
+            $table->index('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -32,11 +31,11 @@ class CreatePostTable extends Migration
      */
     public function down()
     {
-        // Schema::table('post', function(Blueprint $table) {
-        //     $table->dropForeign('user_id');
-        //     $table->dropColumn('title');
-        //     $table->dropColumn('content');
-        // });
+        Schema::table('post', function(Blueprint $table) {
+            $table->dropForeign('user_id');
+            $table->dropColumn('title');
+            $table->dropColumn('content');
+        });
         Schema::dropIfExists('posts');
     }
 }

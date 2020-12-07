@@ -15,8 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //  \App\Models\User::factory(10)->create();
-
         User::factory(5)->has(Post::factory()->count(10), 'posts')->create();
+
+        //Seed the countries
+        $this->call([
+            CountriesSeeder::class
+            ]);
+
+        $this->command->info('Seeded the countries!');
     }
 }

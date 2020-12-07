@@ -48,7 +48,7 @@ class ResourceController extends Controller
      */
     public function show($id)
     {
-        return User::find($id);
+        return User::findOrFail($id);
     }
 
     /**
@@ -82,8 +82,8 @@ class ResourceController extends Controller
      */
     public function destroy($id)
     {
-        $targetUser = User::find($id);
+        $targetUser = User::findOrFail($id);
         $targetUser->delete();
-        return "Deleted";
+        return $targetUser->id;
     }
 }
