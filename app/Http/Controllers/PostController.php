@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -35,8 +36,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        Post::create($request->all());
-        return $request->all();
+        $post = Post::create($request->all());
+        return $post;
     }
 
     /*
@@ -45,9 +46,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        return Post::find($id);
+        return $post;
     }
 
     /**
@@ -68,9 +69,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $user = Auth::user();
+        if($user->can('update',$post))
+        {  
+            $targetPost = $user->posts->find($post->id);
+            $targetPost->update($request->only(['title','content']));
+            return $targetPost;
+        }
+        else
+        {
+            return "Unauthorized request";
+        }
     }
 
     /**
@@ -82,7 +93,14 @@ class PostController extends Controller
     public function destroy($id)
     {
         $targetPost = Post::find($id);
-        $targetPost->delete();
-        return $targetPost->id;
+        if(auth()->user()->can('delete',$targetPost))
+        {
+            $targetPost->delete();
+            return $targetPost->id;
+        }
+        else
+        {
+            return 'Unauthorized';
+        }
     }
 }
