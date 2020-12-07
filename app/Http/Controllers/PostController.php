@@ -36,8 +36,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        Post::create($request->all());
-        return $request->all();
+        $post = Post::create($request->all());
+        return $post;
     }
 
     /*
@@ -46,9 +46,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        return Post::find($id);
+        return $post;
     }
 
     /**
@@ -69,18 +69,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        info('update post');
-        $post = Post::find($id);
-        $user = auth()->user();
+        $user = Auth::user();
         if($user->can('update',$post))
         {  
-            $userPost = $user->posts->find($id);
-            $userPost->title = $request['title'];
-            $userPost->content = $request['content'];
-            $user->push();
-            return 'Post updated';
+            $targetPost = $user->posts->find($post->id);
+            $targetPost->update($request->only(['title','content']));
+            return $targetPost;
         }
         else
         {
