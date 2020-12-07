@@ -6,13 +6,23 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function ageChecker()
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        return "Super Secret Stuff";
+        $this->middleware('auth');
     }
 
-    public function showError()
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
     {
-        return "Age restricted. No age found / age is < 18.";
+        return view('home');
     }
 }

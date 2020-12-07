@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class ResourceController extends Controller
 {
@@ -36,7 +37,11 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->all());
+        $user = User::class();
+        $user->password = Hash::make($request['password']);
+        $user->email = $request['email'];
+        $user->username = $request['username'];
+        User::create($user);
         return $request->all();
     }
 
@@ -48,7 +53,7 @@ class ResourceController extends Controller
      */
     public function show($id)
     {
-        return User::find($id);
+        return User::findOrFail($id);
     }
 
     /**
@@ -82,8 +87,8 @@ class ResourceController extends Controller
      */
     public function destroy($id)
     {
-        $targetUser = User::find($id);
+        $targetUser = User::findOrFail($id);
         $targetUser->delete();
-        return "Deleted";
+        return $targetUser->id;
     }
 }
