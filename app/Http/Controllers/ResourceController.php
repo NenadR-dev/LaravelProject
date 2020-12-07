@@ -37,11 +37,12 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::class();
-        $user->password = Hash::make($request['password']);
-        $user->email = $request['email'];
-        $user->username = $request['username'];
-        User::create($user);
+        info('create user');
+        User::create([
+            'name' => $request['name'],
+            'password' => Hash::make($request['password']),
+            'email' => $request['email']
+        ]);
         return $request->all();
     }
 

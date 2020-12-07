@@ -45,7 +45,7 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
     Route::get('open',[DataController::class, 'open']);
-    Route::get('closed',[DataController::class, 'closed']);
+    Route::get('closed  ',[DataController::class, 'closed']);
 });
 
 Auth::routes(['register' => false]);

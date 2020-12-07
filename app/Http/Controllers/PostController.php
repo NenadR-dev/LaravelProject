@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -70,7 +71,21 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        info('update post');
+        $post = Post::find($id);
+        $user = auth()->user();
+        if($user->can('update',$post))
+        {  
+            $userPost = $user->posts->find($id);
+            $userPost->title = $request['title'];
+            $userPost->content = $request['content'];
+            $user->push();
+            return 'Post updated';
+        }
+        else
+        {
+            return "Unauthorized request";
+        }
     }
 
     /**
@@ -82,7 +97,14 @@ class PostController extends Controller
     public function destroy($id)
     {
         $targetPost = Post::find($id);
-        $targetPost->delete();
-        return $targetPost->id;
+        if(auth()->user()->can('delete',$targetPost))
+        {
+            $targetPost->delete();
+            return $targetPost->id;
+        }
+        else
+        {
+            return 'Unauthorized';
+        }
     }
 }
