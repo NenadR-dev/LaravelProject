@@ -54,7 +54,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8','max:255', 'confirmed'],
-            'country' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255', 'exists:countries'],
             'myCustomField' =>['required', 'string', 'max:255','min:10']
         ]);
     }

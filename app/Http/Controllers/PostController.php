@@ -39,7 +39,7 @@ class PostController extends Controller
         return $request->all();
     }
 
-    /**
+    /*
      * Display the specified resource.
      *
      * @param  int  $id
