@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Post;
 
-class ResourceController extends Controller
+class PostController extends Controller
 {
-       /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('welcome');
+        return Post::all();
     }
 
     /**
@@ -24,8 +24,7 @@ class ResourceController extends Controller
      */
     public function create()
     {
-        $name = "Nenad";
-        return view('firstname',['name' => $name]);
+        //
     }
 
     /**
@@ -36,7 +35,8 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->all());
+        info('Add post log');
+        //Post::create($request->all());
         return $request->all();
     }
 
@@ -48,7 +48,7 @@ class ResourceController extends Controller
      */
     public function show($id)
     {
-        return User::find($id);
+        return Post::find($id);
     }
 
     /**
@@ -71,7 +71,7 @@ class ResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return "PUT / PATCH user hit";
+        //
     }
 
     /**
@@ -82,8 +82,9 @@ class ResourceController extends Controller
      */
     public function destroy($id)
     {
-        $targetUser = User::find($id);
-        $targetUser->delete();
+        info('Test destroy');
+        $targetPost = Post::find($id);
+        $targetPost->delete();
         return "Deleted";
     }
 }
